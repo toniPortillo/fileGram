@@ -1,5 +1,5 @@
 var telegramApi = require('node-telegram-bot-api');
-var token = '330561933:AAGEzmwp1fh44Z6rPn2ZTtlOJeuaablAB2E';
+var token = '';
 var ls = require('./modulo.js');
 
 var bot = new telegramApi(token, {polling: true});
