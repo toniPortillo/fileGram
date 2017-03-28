@@ -1,35 +1,67 @@
-var telegramApi = require('node-telegram-bot-api');
-var token = '';
-var ls = require('./lsFunction.js');
-var cd = require('./cdHomeFunction.js');
+const telegraf = require('telegraf');
+const cd = require('./cdHomeFunction.js');
+const ls = require('./lsFunction.js');
 
-var bot = new telegramApi(token, {polling: true});
-bot.on('text', function (msg) {
-  console.log(msg.text);
-  var chatId = msg.chat.id;
-  console.log(chatId);
-  var instruction = msg.text;
+const token = '';
+const bot = new telegraf(token);
+let situation = ' ';
 
-  switch(instruction) {
+bot.on('text', function (ctx){
+
+  const instruction = ctx.update.message.text;
+  console.log(ctx.update.message.text);
+
+  if(ctx.update.message.text == 'ls') {
+    if(situation == ' ') {
+      situation = '/home'
+    }else {
+      console.log(situation);
+    }
+  }else if(ctx.update.message.text == 'cd') {
+    situation = '/home';
+  }else {
+    situation = ctx.update.message.text;
+  }
+
+  switch(instruction){
     case 'cd':
-      cd(function(error, data) {
-        if(error) {
+      cd(function (error, data){
+        if(error){
           console.error('error', error);
         }
 
-        data.forEach(function(file) {
-          bot.sendMessage(chatId, file);
+        data.forEach(function (file){
+          ctx.reply(file);
+        });
+      });
+
+    break;
+
+    case 'ls':
+      ls(situation, function (error, data){
+        if(error){
+          console.error('error', error);
+        }
+
+        data.forEach(function (file){
+          ctx.reply(file);
         })
-      })
+      });
+    break;
+
     default:
-      ls(msg.campito, function(error, data) {
-        if(error) {
+      ls(ctx.update.message.text, function (error, data){
+        if(error){
           console.error('error', error);
         }
 
-        data.forEach(function(file) {
-          bot.sendMessage(chatId, file);
-        })
-      })
+        data.forEach(function (file){
+          ctx.reply(file);
+        });
+      });
+
+    break;
   }
 })
+
+bot.startPolling();

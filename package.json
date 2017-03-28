@@ -4,15 +4,16 @@
   "description": "\"Funcion para telegram que te permite traer ficheros desde una máquina a cualquiera de tus dispositivos\"",
   "main": "index.js",
   "dependencies": {
-    "node-telegram-bot-api": "^0.27.0"
+    "node-telegram-bot-api": "^0.27.0",
+    "telegraf": "^3.6.7"
   },
   "devDependencies": {
-    "node-telegram-bot-api" : ""
+    "node-telegram-bot-api": ""
+    "telegraf": ""
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Toni Portillo",
   "license": "ISC"
-
 }
