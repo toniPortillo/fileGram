@@ -2,8 +2,8 @@ const telegraf = require('telegraf');
 const cd = require('./cdHomeFunction.js');
 const ls = require('./lsFunction.js');
 
-const token = '';
-const bot = new telegraf(token);
+const TOKEN = process.env.TOKEN;
+const bot = new telegraf(TOKEN);
 let situation = ' ';
 
 bot.on('text', function (ctx){

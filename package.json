@@ -7,10 +7,6 @@
     "node-telegram-bot-api": "^0.27.0",
     "telegraf": "^3.6.7"
   },
-  "devDependencies": {
-    "node-telegram-bot-api": ""
-    "telegraf": ""
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
