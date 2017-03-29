@@ -6,7 +6,7 @@ const TOKEN = process.env.TOKEN;
 const bot = new telegraf(TOKEN);
 let situation = ' ';
 
-bot.on('text', function (ctx){
+bot.on('text', function (ctx) {
 
   const instruction = ctx.update.message.text;
   console.log(ctx.update.message.text);
@@ -23,7 +23,7 @@ bot.on('text', function (ctx){
     situation = ctx.update.message.text;
   }
 
-  switch(instruction){
+  switch(instruction) {
     case 'cd':
       cd(function (error, data){
         if(error){
@@ -50,7 +50,7 @@ bot.on('text', function (ctx){
     break;
 
     default:
-      ls(ctx.update.message.text, function (error, data){
+      ls(ctx.update.message.text, function (error, data) {
         if(error){
           console.error('error', error);
         }
