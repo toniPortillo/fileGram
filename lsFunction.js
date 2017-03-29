@@ -8,7 +8,7 @@ module.exports = function (dir, callback) {
   function back(error, data) {
 
     if(error) {
-      return callback(error);
+      callback(error);
     }
 
     callback(null, data);

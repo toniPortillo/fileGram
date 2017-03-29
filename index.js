@@ -1,27 +1,21 @@
 const telegraf = require('telegraf');
 const cd = require('./cdHomeFunction.js');
 const ls = require('./lsFunction.js');
+const situation = require('./situation.js');
 
 const TOKEN = process.env.TOKEN;
 const bot = new telegraf(TOKEN);
-let situation = ' ';
+let situationValue = ' ';
+let aux = ' ';
+
 
 bot.on('text', function (ctx) {
 
   const instruction = ctx.update.message.text;
   console.log(ctx.update.message.text);
 
-  if(ctx.update.message.text == 'ls') {
-    if(situation == ' ') {
-      situation = '/home'
-    }else {
-      console.log(situation);
-    }
-  }else if(ctx.update.message.text == 'cd') {
-    situation = '/home';
-  }else {
-    situation = ctx.update.message.text;
-  }
+  situationValue = situation(ctx.update.message.text, aux);
+  aux = situationValue;
 
   switch(instruction) {
     case 'cd':
@@ -38,7 +32,7 @@ bot.on('text', function (ctx) {
     break;
 
     case 'ls':
-      ls(situation, function (error, data){
+      ls(situationValue, function (error, data){
         if(error){
           console.error('error', error);
         }
