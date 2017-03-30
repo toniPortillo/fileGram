@@ -3,14 +3,12 @@ var path = require('path');
 
 module.exports = function (dir, callback) {
 
-  fs.readdir(dir, back);
-
-  function back(error, data) {
-
+  fs.readdir(dir, function (error, data) {
     if(error) {
       callback(error);
+    }else {
+      callback(null, data);
     }
+  });
 
-    callback(null, data);
-  }
 }

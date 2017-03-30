@@ -6,8 +6,9 @@ module.exports = function(dir, callback) {
   fs.readdir(dir, function (error, data) {
     if(error) {
       callback(error);
+    }else {
+      callback(null, data);
     }
-
-    callback(null, data);
   })
+
 }
