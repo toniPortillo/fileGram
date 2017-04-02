@@ -2,7 +2,6 @@ module.exports = function (command, situation) {
   switch (command) {
     case 'cd':
       return situation = '/home';
-
     break;
 
     case 'cd ..':
@@ -28,7 +27,7 @@ module.exports = function (command, situation) {
     break;
 
     default:
-        return situation = command;
+        return situation = situation + '/' + command;
     break;
   }
 }
