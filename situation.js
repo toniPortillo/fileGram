@@ -27,7 +27,15 @@ module.exports = function (command, situation) {
     break;
 
     default:
-        return situation = situation + '/' + command;
+        let count = command.split('get ');
+        let tam = command.split('get ').length;
+        let format;
+
+        if(count[0] === ''){
+          return format =  situation + '/' + count[1];
+        }else {
+          return situation = situation + '/' + command;
+        }
     break;
   }
 }

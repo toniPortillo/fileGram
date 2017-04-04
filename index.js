@@ -1,8 +1,10 @@
 const telegraf = require('telegraf');
+const fs = require('fs');
 const cd = require('./cdHomeFunction.js');
 const ls = require('./lsFunction.js');
 const cdReturnBack = require('./cdReturnBack.js');
 const cdRute = require('./cdRute.js');
+const getFile = require('./getFile');
 const situation = require('./situation.js');
 
 const TOKEN = process.env.TOKEN;
@@ -12,13 +14,18 @@ let situationsValue = ' ';
 let aux = ' ';
 let cd_aux;
 let count;
+let countGet;
 
 bot.on('text', function (ctx) {
   const instruction = ctx.update.message.text;
   count = instruction.split('cd /');
+  countGet = instruction.split('get ');
 
   if(count[0] === '') {
     cd_aux = count[1];
+    console.log(cd_aux);
+  }else if(countGet[0] === '') {
+    cd_aux = 'get';
     console.log(cd_aux);
   }else {
     cd_aux = instruction;
@@ -26,7 +33,11 @@ bot.on('text', function (ctx) {
   console.log(ctx.update.message.text);
   console.log(cd_aux);
 
-  situationsValue = situation(cd_aux, aux);
+  if(countGet[0] === '') {
+    situationsValue = situation(ctx.update.message.text, aux);
+  }else {
+    situationsValue = situation(cd_aux, aux);
+  }
   aux = situationsValue;
   console.log(aux);
 
@@ -55,6 +66,14 @@ bot.on('text', function (ctx) {
           });
         }
       });
+    break;
+
+    case 'get':
+      ctx.reply(situationsValue);
+      bot.telegram.sendDocument('11150012', {
+        source: fs.createReadStream(getFile(situationsValue))
+      });
+
     break;
 
     case 'ls':
