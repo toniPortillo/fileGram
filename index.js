@@ -71,7 +71,7 @@ bot.on('text', function (ctx) {
     case 'get':
       ctx.reply(situationsValue);
       bot.telegram.sendDocument('11150012', {
-        source: fs.createReadStream(getFile(situationsValue))
+        source: getFile(situationsValue)
       });
 
     break;
