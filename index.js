@@ -37,8 +37,8 @@ bot.on('text', function (ctx) {
     situationsValue = situation(ctx.update.message.text, aux);
   }else {
     situationsValue = situation(cd_aux, aux);
+    aux = situationsValue;
   }
-  aux = situationsValue;
   console.log(aux);
 
   switch(cd_aux) {
@@ -70,8 +70,15 @@ bot.on('text', function (ctx) {
 
     case 'get':
       ctx.reply(situationsValue);
-      bot.telegram.sendDocument('11150012', {
-        source: getFile(situationsValue)
+      getFile(situationsValue, function (error, data) {
+        if(error){
+          console.error(situationsValue);
+          ctx.reply(situationsValue + ' no corresponde con ningún formato de fichero valido');
+        }else {
+          bot.telegram.sendDocument('11150012', {
+            source: situationsValue
+          })
+        }
       });
 
     break;
@@ -95,7 +102,7 @@ bot.on('text', function (ctx) {
       cdRute(situationsValue, function (error, data) {
         if(error){
           console.error('error', error);
-          ctx.reply('Path:' + ctx.update.message.text + ' no existe');
+          ctx.reply('Path:' + situationsValue + ' no existe');
         }else{
           data.forEach(function (file){
             ctx.reply(file);

@@ -27,15 +27,23 @@ module.exports = function (command, situation) {
     break;
 
     default:
-        let count = command.split('get ');
-        let tam = command.split('get ').length;
-        let format;
+      let count = command.split('get ');
+      let tam = command.split('get ').length;
+      let aux = '';
 
-        if(count[0] === ''){
-          return format =  situation + '/' + count[1];
+      if(count[0] === ''){
+        return aux =  situation + '/' + count[1];
+      }else {
+        for(let i = 0; i < 4 ; i++) {
+          aux = aux + command[i];
+        }
+        if(aux === 'home') {
+          count = command.split('home');
+          return situation = '/home' + count[1];
         }else {
           return situation = situation + '/' + command;
         }
+      }
     break;
   }
 }
