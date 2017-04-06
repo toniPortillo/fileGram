@@ -15,11 +15,13 @@ let aux = ' ';
 let cd_aux;
 let count;
 let countGet;
+let format;
 
 bot.on('text', function (ctx) {
   const instruction = ctx.update.message.text;
   count = instruction.split('cd /');
   countGet = instruction.split('get ');
+  format = ctx.update.message.text;
 
   if(count[0] === '') {
     cd_aux = count[1];
@@ -28,7 +30,11 @@ bot.on('text', function (ctx) {
     cd_aux = 'get';
     console.log(cd_aux);
   }else {
-    cd_aux = instruction;
+    if(format[0] === '/') {
+      cd_aux = '';
+    }else {
+      cd_aux = instruction;
+    }
   }
   console.log(ctx.update.message.text);
   console.log(cd_aux);
@@ -88,7 +94,12 @@ bot.on('text', function (ctx) {
       ls(situationsValue, function (error, data) {
         if(error){
           console.error('error', error);
-          ctx.reply('Path:' + situationsValue + ' incorrecto, introduzca cd u otra ruta para seguir');
+          let format = situationsValue.indexOf('/cd ');
+          if(format != -1) {
+            ctx.reply('Comando incorrecto, introduzca comando cd o cd / (ruta completa)')
+          }else {
+            ctx.reply('Comando incorrecto, Path:' + situationsValue + ' no existe, introduce comando cd o cd / (ruta completa)');
+          }
         }else {
           data.forEach(function (file) {
             ctx.reply(file);
@@ -98,11 +109,16 @@ bot.on('text', function (ctx) {
     break;
 
     default:
-      ctx.reply(situationsValue);
+    ctx.reply(situationsValue);
       cdRute(situationsValue, function (error, data) {
         if(error){
           console.error('error', error);
-          ctx.reply('Path:' + situationsValue + ' no existe');
+          let format = situationsValue.indexOf('/cd ');
+          if(format != -1) {
+            ctx.reply('Comando incorrecto, introduzca comando cd o cd / (ruta completa)')
+          }else {
+            ctx.reply('Comando incorrecto, Path:' + situationsValue + ' no existe, introduce comando cd o cd / (ruta completa)');
+          }
         }else{
           data.forEach(function (file){
             ctx.reply(file);

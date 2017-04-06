@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = function (command, situation) {
   switch (command) {
     case 'cd':
@@ -30,18 +32,21 @@ module.exports = function (command, situation) {
       let count = command.split('get ');
       let tam = command.split('get ').length;
       let aux = '';
-
+      let format;
       if(count[0] === ''){
         return aux =  situation + '/' + count[1];
       }else {
+        format = situation.indexOf(command)
         for(let i = 0; i < 4 ; i++) {
           aux = aux + command[i];
         }
         if(aux === 'home') {
           count = command.split('home');
           return situation = '/home' + count[1];
+        }else if(format != -1) {
+          return situation;
         }else {
-          return situation = situation + '/' + command;
+            return situation = situation + '/' + command;            
         }
       }
     break;
