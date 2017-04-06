@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 module.exports = function (command, situation) {
   switch (command) {
     case 'cd':
@@ -46,7 +44,7 @@ module.exports = function (command, situation) {
         }else if(format != -1) {
           return situation;
         }else {
-            return situation = situation + '/' + command;            
+            return situation = situation + '/' + command;
         }
       }
     break;
