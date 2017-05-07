@@ -1,10 +1,6 @@
 const telegraf = require('telegraf');
 const fs = require('fs');
-const cd = require('./cdHomeFunction.js');
-const ls = require('./lsFunction.js');
-const cdReturnBack = require('./cdReturnBack.js');
-const cdRute = require('./cdRute.js');
-const getFile = require('./getFile');
+const commandsModule = require('./commandsModule.js');
 const situation = require('./situation.js');
 
 const TOKEN = process.env.TOKEN;
@@ -53,7 +49,7 @@ bot.on('text', function (ctx) {
     switch(cd_aux) {
       case 'cd':
         ctx.reply(situationsValue);
-        cd(function (error, data){
+        commandsModule.cdHomeFunction(function (error, data){
           if(error){
             console.error('error', error);
           }else {
@@ -66,7 +62,7 @@ bot.on('text', function (ctx) {
 
       case 'cd ..':
         ctx.reply(situationsValue);
-        cdReturnBack(situationsValue, function(error, data) {
+        commandsModule.cdReturnBack(situationsValue, function(error, data) {
           if(error) {
             console.error('error', error);
           }else {
@@ -79,7 +75,7 @@ bot.on('text', function (ctx) {
 
       case 'get':
         ctx.reply(situationsValue);
-        getFile(situationsValue, function (error, data) {
+        commandsModule.getFile(situationsValue, function (error, data) {
           if(error){
             console.error(situationsValue);
             ctx.reply(situationsValue + ' no corresponde con ningún formato de fichero valido');
@@ -94,12 +90,12 @@ bot.on('text', function (ctx) {
 
       case 'ls':
         ctx.reply(situationsValue);
-        ls(situationsValue, function (error, data) {
+        commandsModule.lsFunction(situationsValue, function (error, data) {
           if(error){
             console.error('error', error);
             let format = situationsValue.indexOf('/cd ');
             if(format != -1) {
-              ctx.reply('Comando incorrecto, introduzca comando cd o cd / (ruta completa)')
+              ctx.reply('Comando incorrecto, introduzca comando cd o cd / (ruta completa)');
             }else {
               ctx.reply('Comando incorrecto, Path:' + situationsValue + ' no existe, introduce comando cd o cd / (ruta completa)');
             }
@@ -113,12 +109,12 @@ bot.on('text', function (ctx) {
 
       default:
       ctx.reply(situationsValue);
-        cdRute(situationsValue, function (error, data) {
+        commandsModule.cdRute(situationsValue, function (error, data) {
           if(error){
             console.error('error', error);
             let format = situationsValue.indexOf('/cd ');
             if(format != -1) {
-              ctx.reply('Comando incorrecto, introduzca comando cd o cd / (ruta completa)')
+              ctx.reply('Comando incorrecto, introduzca comando cd o cd / (ruta completa)');
             }else {
               ctx.reply('Comando incorrecto, Path:' + situationsValue + ' no existe, introduce comando cd o cd / (ruta completa)');
             }
